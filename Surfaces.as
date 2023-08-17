@@ -53,13 +53,13 @@ void RenderSurfaces(CSceneVehicleVisState@ state) {
     nvg::BeginPath();
     nvg::Rect(
         vec2(x + halfWidth, y),
-        vec2(1, h)
+        vec2(0, h)
     );
     nvg::Stroke();
     nvg::BeginPath();
     nvg::Rect(
         vec2(x, y + (h * 0.5)),
-        vec2(w, 1)
+        vec2(w, 0)
     );
     nvg::Stroke();
 
