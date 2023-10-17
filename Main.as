@@ -1,6 +1,6 @@
 /*
 c 2023-08-16
-m 2023-09-26
+m 2023-10-16
 */
 
 bool replay;
@@ -58,7 +58,7 @@ void Render() {
     CGamePlaygroundUIConfig::EUISequence sequence = playground.UIConfigs[0].UISequence;
     if (
         !(sequence == CGamePlaygroundUIConfig::EUISequence::Playing) &&
-        !(sequence == CGamePlaygroundUIConfig::EUISequence::UIInteraction && replay)
+        !(sequence == CGamePlaygroundUIConfig::EUISequence::EndRound && replay)
     ) return;
 
     RenderSurfaces(vis.AsyncState);
