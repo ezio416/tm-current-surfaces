@@ -1,6 +1,6 @@
 /*
 c 2023-08-16
-m 2023-10-18
+m 2023-10-19
 */
 
 bool replay;
@@ -29,7 +29,11 @@ void Render() {
 
     CTrackMania@ app = cast<CTrackMania@>(GetApp());
 
+#if TMNEXT
+    CSmArenaClient@ playground = cast<CSmArenaClient@>(app.CurrentPlayground);
+#elif MP4
     CGamePlayground@ playground = cast<CGamePlayground@>(app.CurrentPlayground);
+#endif
 
     if (playground is null)
         return;
@@ -51,12 +55,11 @@ void Render() {
 
 #if TMNEXT
     CSceneVehicleVis@ vis;
-    CSmPlayer@ player = cast<CSmPlayer@>(playground.GameTerminals[0].GUIPlayer);
 #elif MP4
     CSceneVehicleVisState@ vis;
-    CTrackManiaPlayer@ player = cast<CTrackManiaPlayer@>(playground.GameTerminals[0].GUIPlayer);
 #endif
 
+    CSmPlayer@ player = cast<CSmPlayer@>(playground.GameTerminals[0].GUIPlayer);
     if (player !is null) {
         @vis = VehicleState::GetVis(scene, player);
         replay = false;
