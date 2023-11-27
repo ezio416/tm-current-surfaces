@@ -1,6 +1,6 @@
 /*
 c 2023-08-16
-m 2023-10-16
+m 2023-10-19
 */
 
 bool replay;
@@ -24,22 +24,41 @@ void Render() {
         !S_Enabled ||
         (S_HideWithGame && !UI::IsGameUIVisible()) ||
         (S_HideWithOP && !UI::IsOverlayShown())
-    ) return;
+    )
+        return;
 
     CTrackMania@ app = cast<CTrackMania@>(GetApp());
 
+#if TMNEXT
     CSmArenaClient@ playground = cast<CSmArenaClient@>(app.CurrentPlayground);
-    if (playground is null) return;
+#elif MP4
+    CGamePlayground@ playground = cast<CGamePlayground@>(app.CurrentPlayground);
+#endif
+
+    if (playground is null)
+        return;
 
     if (
         playground.GameTerminals.Length != 1 ||
         playground.UIConfigs.Length == 0
-    ) return;
+    )
+        return;
 
+#if TMNEXT
     ISceneVis@ scene = cast<ISceneVis@>(app.GameScene);
-    if (scene is null) return;
+#elif MP4
+    CGameScene@ scene = cast<CGameScene@>(app.GameScene);
+#endif
 
+    if (scene is null)
+        return;
+
+#if TMNEXT
     CSceneVehicleVis@ vis;
+#elif MP4
+    CSceneVehicleVisState@ vis;
+#endif
+
     CSmPlayer@ player = cast<CSmPlayer@>(playground.GameTerminals[0].GUIPlayer);
     if (player !is null) {
         @vis = VehicleState::GetVis(scene, player);
@@ -48,18 +67,17 @@ void Render() {
         @vis = VehicleState::GetSingularVis(scene);
         replay = true;
     }
-    if (vis is null) return;
 
-    CSmArena@ arena = cast<CSmArena@>(playground.Arena);
-    if (arena is null) return;
-
-    if (arena.Players.Length == 0) return;
+    if (vis is null)
+        return;
 
     CGamePlaygroundUIConfig::EUISequence sequence = playground.UIConfigs[0].UISequence;
+
     if (
         !(sequence == CGamePlaygroundUIConfig::EUISequence::Playing) &&
         !(sequence == CGamePlaygroundUIConfig::EUISequence::EndRound && replay)
-    ) return;
+    )
+        return;
 
     RenderSurfaces(vis.AsyncState);
 }
