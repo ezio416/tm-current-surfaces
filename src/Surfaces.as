@@ -1,6 +1,6 @@
 /*
 c 2023-08-16
-m 2023-10-18
+m 2023-12-06
 */
 
 float scale = UI::GetScale();
@@ -95,20 +95,12 @@ void RenderSurfaces(CSceneVehicleVisState@ state) {
     nvg::TextBox(
         vec2(x, rearY),
         halfWidth,
-#if TMNEXT
-        MaterialName(state.RLGroundContactMaterial),
-#elif MP4
-        MaterialName(state.RRGroundContactMaterial)  // rear wheels swapped in MP4 as of Openplanet 1.26.0
-#endif
+        MaterialName(state.RLGroundContactMaterial)
     );
     nvg::TextBox(
         vec2(x + halfWidth, rearY),
         halfWidth,
-#if TMNEXT
-        MaterialName(state.RRGroundContactMaterial),
-#elif MP4
-        MaterialName(state.RLGroundContactMaterial)  // rear wheels swapped in MP4 as of Openplanet 1.26.0
-#endif
+        MaterialName(state.RRGroundContactMaterial)
     );
 }
 
