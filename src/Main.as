@@ -43,19 +43,15 @@ void Render() {
     )
         return;
 
-#if TMNEXT
-    ISceneVis@ Scene = App.GameScene;
-#elif MP4
-    CGameScene@ Scene = App.GameScene;
-#endif
-
-    if (Scene is null)
+    if (App.GameScene is null)
         return;
 
 #if TMNEXT
+    ISceneVis@ Scene = App.GameScene;
     CSceneVehicleVis@ Vis;
     CSmPlayer@ Player = cast<CSmPlayer@>(Playground.GameTerminals[0].GUIPlayer);
 #elif MP4
+    CGameScene@ Scene = App.GameScene;
     CSceneVehicleVisState@ Vis;
     CTrackManiaPlayer@ Player = cast<CTrackManiaPlayer@>(Playground.GameTerminals[0].GUIPlayer);
 #endif
