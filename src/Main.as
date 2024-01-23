@@ -1,7 +1,13 @@
 // c 2023-08-16
 // m 2024-01-23
 
-bool replay = false;
+bool         replay = false;
+const string title  = "\\$F00" + Icons::Road + "\\$G Current Surfaces";
+
+void RenderMenu() {
+    if (UI::MenuItem(title, "", S_Enabled))
+        S_Enabled = !S_Enabled;
+}
 
 void Main() {
     ChangeFont();
@@ -12,11 +18,6 @@ void OnSettingsChanged() {
         ChangeFont();
 }
 
-void RenderMenu() {
-    if (UI::MenuItem("\\$F00" + Icons::Road + "\\$G Current Surfaces", "", S_Enabled))
-        S_Enabled = !S_Enabled;
-}
-
 void Render() {
     if (
         !S_Enabled ||
@@ -25,51 +26,51 @@ void Render() {
     )
         return;
 
-    CTrackMania@ app = cast<CTrackMania@>(GetApp());
+    CTrackMania@ App = cast<CTrackMania@>(GetApp());
 
 #if TMNEXT
-    CSmArenaClient@ playground = cast<CSmArenaClient@>(app.CurrentPlayground);
+    CSmArenaClient@ Playground = cast<CSmArenaClient@>(App.CurrentPlayground);
 #elif MP4
-    CGamePlayground@ playground = cast<CGamePlayground@>(app.CurrentPlayground);
+    CGamePlayground@ Playground = App.CurrentPlayground;
 #endif
 
-    if (playground is null)
+    if (Playground is null)
         return;
 
     if (
-        playground.GameTerminals.Length != 1 ||
-        playground.UIConfigs.Length == 0
+        Playground.GameTerminals.Length != 1 ||
+        Playground.UIConfigs.Length == 0
     )
         return;
 
 #if TMNEXT
-    ISceneVis@ scene = app.GameScene;
+    ISceneVis@ Scene = App.GameScene;
 #elif MP4
-    CGameScene@ scene = cast<CGameScene@>(app.GameScene);
+    CGameScene@ Scene = cast<CGameScene@>(App.GameScene);
 #endif
 
-    if (scene is null)
+    if (Scene is null)
         return;
 
 #if TMNEXT
-    CSceneVehicleVis@ vis;
+    CSceneVehicleVis@ Vis;
 #elif MP4
-    CSceneVehicleVisState@ vis;
+    CSceneVehicleVisState@ Vis;
 #endif
 
-    CSmPlayer@ player = cast<CSmPlayer@>(playground.GameTerminals[0].GUIPlayer);
-    if (player !is null) {
-        @vis = VehicleState::GetVis(scene, player);
+    CSmPlayer@ Player = cast<CSmPlayer@>(Playground.GameTerminals[0].GUIPlayer);
+    if (Player !is null) {
+        @Vis = VehicleState::GetVis(Scene, Player);
         replay = false;
     } else {
-        @vis = VehicleState::GetSingularVis(scene);
+        @Vis = VehicleState::GetSingularVis(Scene);
         replay = true;
     }
 
-    if (vis is null)
+    if (Vis is null)
         return;
 
-    CGamePlaygroundUIConfig::EUISequence sequence = playground.UIConfigs[0].UISequence;
+    CGamePlaygroundUIConfig::EUISequence sequence = Playground.UIConfigs[0].UISequence;
 
     if (
         !(sequence == CGamePlaygroundUIConfig::EUISequence::Playing) &&
@@ -77,5 +78,5 @@ void Render() {
     )
         return;
 
-    RenderSurfaces(vis.AsyncState);
+    RenderSurfaces(Vis.AsyncState);
 }
