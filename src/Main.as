@@ -31,7 +31,7 @@ void Render() {
 #if TMNEXT
     CSmArenaClient@ Playground = cast<CSmArenaClient@>(App.CurrentPlayground);
 #elif MP4
-    CGamePlayground@ Playground = App.CurrentPlayground;
+    auto Playground = App.CurrentPlayground;  // could be CTrackManiaRaceNew@ or CTrackManiaRace1P@
 #endif
 
     if (Playground is null)
@@ -46,7 +46,7 @@ void Render() {
 #if TMNEXT
     ISceneVis@ Scene = App.GameScene;
 #elif MP4
-    CGameScene@ Scene = cast<CGameScene@>(App.GameScene);
+    CGameScene@ Scene = App.GameScene;
 #endif
 
     if (Scene is null)
@@ -54,11 +54,12 @@ void Render() {
 
 #if TMNEXT
     CSceneVehicleVis@ Vis;
+    CSmPlayer@ Player = cast<CSmPlayer@>(Playground.GameTerminals[0].GUIPlayer);
 #elif MP4
     CSceneVehicleVisState@ Vis;
+    CTrackManiaPlayer@ Player = cast<CTrackManiaPlayer@>(Playground.GameTerminals[0].GUIPlayer);
 #endif
 
-    CSmPlayer@ Player = cast<CSmPlayer@>(Playground.GameTerminals[0].GUIPlayer);
     if (Player !is null) {
         @Vis = VehicleState::GetVis(Scene, Player);
         replay = false;

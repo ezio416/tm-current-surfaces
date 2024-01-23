@@ -3,7 +3,7 @@
 
 float scale = UI::GetScale();
 
-void RenderSurfaces(CSceneVehicleVisState@ state) {
+void RenderSurfaces(CSceneVehicleVisState@ State) {
     if (!S_Enabled)
         return;
 
@@ -83,23 +83,23 @@ void RenderSurfaces(CSceneVehicleVisState@ state) {
     nvg::TextBox(
         vec2(x, frontY),
         halfWidth,
-        MaterialName(state.FLGroundContactMaterial)
+        MaterialName(State.FLGroundContactMaterial)
     );
     nvg::TextBox(
         vec2(x + halfWidth, frontY),
         halfWidth,
-        MaterialName(state.FRGroundContactMaterial)
+        MaterialName(State.FRGroundContactMaterial)
     );
     float rearY = y + h * 0.76f;
     nvg::TextBox(
         vec2(x, rearY),
         halfWidth,
-        MaterialName(state.RLGroundContactMaterial)
+        MaterialName(State.RLGroundContactMaterial)
     );
     nvg::TextBox(
         vec2(x + halfWidth, rearY),
         halfWidth,
-        MaterialName(state.RRGroundContactMaterial)
+        MaterialName(State.RRGroundContactMaterial)
     );
 }
 
@@ -142,21 +142,23 @@ string MaterialName(CAudioSourceSurface::ESurfId mat) {
 
     switch (mat) {
         case CAudioSourceSurface::ESurfId::Concrete:
-        case CAudioSourceSurface::ESurfId::Asphalt:       return "road";
-        case CAudioSourceSurface::ESurfId::Grass:         return "grass";
+        case CAudioSourceSurface::ESurfId::Asphalt:      return "road";
+        case CAudioSourceSurface::ESurfId::Grass:        return "grass";
+        case CAudioSourceSurface::ESurfId::Metal:        return "metal";
         case CAudioSourceSurface::ESurfId::Dirt:
-        case CAudioSourceSurface::ESurfId::DirtRoad:      return "dirt";
-        case CAudioSourceSurface::ESurfId::Turbo:         return "turbo";
-        case CAudioSourceSurface::ESurfId::WetDirtRoad:   return "wet dirt";
-        case CAudioSourceSurface::ESurfId::Turbo2:        return "red turbo";
-        case CAudioSourceSurface::ESurfId::Bumper:        return "bumper";
-        case CAudioSourceSurface::ESurfId::FreeWheeling:  return "free wheel";
-        case CAudioSourceSurface::ESurfId::RubberBand:    return "road border";
-        case CAudioSourceSurface::ESurfId::NoGrip:        return "no grip";
-        case CAudioSourceSurface::ESurfId::Bumper2:       return "red bumper";
-        case CAudioSourceSurface::ESurfId::NoSteering:    return "no steering";
-        case CAudioSourceSurface::ESurfId::NoBrakes:      return "no brakes";
-        default:                                          return tostring(mat);
+        case CAudioSourceSurface::ESurfId::DirtRoad:     return "dirt";
+        case CAudioSourceSurface::ESurfId::Turbo:        return "turbo";
+        case CAudioSourceSurface::ESurfId::Rubber:
+        case CAudioSourceSurface::ESurfId::RubberBand:   return "road border";
+        case CAudioSourceSurface::ESurfId::WetDirtRoad:  return "wet dirt";
+        case CAudioSourceSurface::ESurfId::Turbo2:       return "red turbo";
+        case CAudioSourceSurface::ESurfId::Bumper:       return "bumper";
+        case CAudioSourceSurface::ESurfId::FreeWheeling: return "free wheel";
+        case CAudioSourceSurface::ESurfId::NoGrip:       return "no grip";
+        case CAudioSourceSurface::ESurfId::Bumper2:      return "red bumper";
+        case CAudioSourceSurface::ESurfId::NoSteering:   return "no steering";
+        case CAudioSourceSurface::ESurfId::NoBrakes:     return "no brakes";
+        default:                                         return tostring(mat);
     }
 }
 #endif
