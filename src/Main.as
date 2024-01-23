@@ -1,9 +1,7 @@
-/*
-c 2023-08-16
-m 2023-10-19
-*/
+// c 2023-08-16
+// m 2024-01-23
 
-bool replay;
+bool replay = false;
 
 void Main() {
     ChangeFont();
@@ -45,7 +43,7 @@ void Render() {
         return;
 
 #if TMNEXT
-    ISceneVis@ scene = cast<ISceneVis@>(app.GameScene);
+    ISceneVis@ scene = app.GameScene;
 #elif MP4
     CGameScene@ scene = cast<CGameScene@>(app.GameScene);
 #endif

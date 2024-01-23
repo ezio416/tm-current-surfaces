@@ -1,7 +1,5 @@
-/*
-c 2023-08-16
-m 2023-08-17
-*/
+// c 2023-08-16
+// m 2024-01-23
 
 [Setting category="General" name="Enabled"]
 bool S_Enabled = true;
@@ -11,7 +9,6 @@ bool S_HideWithGame = true;
 
 [Setting category="General" name="Hide with Openplanet UI"]
 bool S_HideWithOP = false;
-
 
 
 [Setting category="Style" name="Show material IDs instead of nice names"]
@@ -43,6 +40,7 @@ vec4 S_BorderColor = vec4(1, 1, 1, 1);
 
 [Setting category="Style" name="Corner radius" min=0 max=100]
 float S_CornerRadius = 15;
+
 
 [Setting category="Position" name="Move & resize window easily" description="ignores sliders below"]
 bool S_MoveResize = false;

@@ -1,12 +1,11 @@
-/*
-c 2023-08-16
-m 2023-12-06
-*/
+// c 2023-08-16
+// m 2024-01-23
 
 float scale = UI::GetScale();
 
 void RenderSurfaces(CSceneVehicleVisState@ state) {
-    if (!S_Enabled) return;
+    if (!S_Enabled)
+        return;
 
     int displayWidth = Draw::GetWidth();
     int displayHeight = Draw::GetHeight();
@@ -35,7 +34,7 @@ void RenderSurfaces(CSceneVehicleVisState@ state) {
         S_Height = int(size.y);
     }
 
-    float halfWidth = w * 0.5;
+    float halfWidth = w * 0.5f;
 
     // background
     nvg::BeginPath();
@@ -53,13 +52,13 @@ void RenderSurfaces(CSceneVehicleVisState@ state) {
     nvg::BeginPath();
     nvg::Rect(
         vec2(x + halfWidth, y),
-        vec2(0, h)
+        vec2(0.0f, h)
     );
     nvg::Stroke();
     nvg::BeginPath();
     nvg::Rect(
-        vec2(x, y + (h * 0.5)),
-        vec2(w, 0)
+        vec2(x, y + (h * 0.5f)),
+        vec2(w, 0.0f)
     );
     nvg::Stroke();
 
@@ -80,7 +79,7 @@ void RenderSurfaces(CSceneVehicleVisState@ state) {
     nvg::FontSize(S_FontSize);
     nvg::FillColor(S_TextColor);
     nvg::TextAlign(nvg::Align::Middle | nvg::Align::Center);
-    float frontY = y + h * 0.26;
+    float frontY = y + h * 0.26f;
     nvg::TextBox(
         vec2(x, frontY),
         halfWidth,
@@ -91,7 +90,7 @@ void RenderSurfaces(CSceneVehicleVisState@ state) {
         halfWidth,
         MaterialName(state.FRGroundContactMaterial)
     );
-    float rearY = y + h * 0.76;
+    float rearY = y + h * 0.76f;
     nvg::TextBox(
         vec2(x, rearY),
         halfWidth,
@@ -106,7 +105,8 @@ void RenderSurfaces(CSceneVehicleVisState@ state) {
 
 #if TMNEXT
 string MaterialName(EPlugSurfaceMaterialId mat) {
-    if (S_Raw) return tostring(mat);
+    if (S_Raw)
+        return tostring(mat);
 
     switch (mat) {
         case EPlugSurfaceMaterialId::Concrete:
@@ -122,7 +122,7 @@ string MaterialName(EPlugSurfaceMaterialId mat) {
         case EPlugSurfaceMaterialId::Water:             return "water";  // underwater surfaces don't work
         case EPlugSurfaceMaterialId::Wood:              return "wood";
         case EPlugSurfaceMaterialId::Snow:              return "snow";
-        case EPlugSurfaceMaterialId::ResonantMetal:     return "fabric";
+        case EPlugSurfaceMaterialId::ResonantMetal:     return "trackwall";
         case EPlugSurfaceMaterialId::MetalTrans:        return "signage";
         case EPlugSurfaceMaterialId::TechMagnetic:
         case EPlugSurfaceMaterialId::TechSuperMagnetic: return "magnet";
@@ -134,9 +134,11 @@ string MaterialName(EPlugSurfaceMaterialId mat) {
         default:                                        return tostring(mat);
     }
 }
+
 #elif MP4
 string MaterialName(CAudioSourceSurface::ESurfId mat) {
-    if (S_Raw) return tostring(mat);
+    if (S_Raw)
+        return tostring(mat);
 
     switch (mat) {
         case CAudioSourceSurface::ESurfId::Concrete:
