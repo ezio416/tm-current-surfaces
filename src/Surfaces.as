@@ -1,6 +1,6 @@
 /*
 c 2023-08-16
-m 2023-12-06
+m 2023-08-17
 */
 
 float scale = UI::GetScale();
@@ -104,7 +104,6 @@ void RenderSurfaces(CSceneVehicleVisState@ state) {
     );
 }
 
-#if TMNEXT
 string MaterialName(EPlugSurfaceMaterialId mat) {
     if (S_Raw) return tostring(mat);
 
@@ -131,29 +130,6 @@ string MaterialName(EPlugSurfaceMaterialId mat) {
         case EPlugSurfaceMaterialId::Green:             return "grass";
         case EPlugSurfaceMaterialId::Plastic:           return "plastic";
         case EPlugSurfaceMaterialId::XXX_Null:          return "air";
-        default:                                        return tostring(mat);
+        default:                                        return "\\$F00" + tostring(mat);
     }
 }
-#elif MP4
-string MaterialName(CAudioSourceSurface::ESurfId mat) {
-    if (S_Raw) return tostring(mat);
-
-    switch (mat) {
-        case CAudioSourceSurface::ESurfId::Concrete:
-        case CAudioSourceSurface::ESurfId::Asphalt:       return "road";
-        case CAudioSourceSurface::ESurfId::Grass:         return "grass";
-        case CAudioSourceSurface::ESurfId::Dirt:
-        case CAudioSourceSurface::ESurfId::DirtRoad:      return "dirt";
-        case CAudioSourceSurface::ESurfId::Turbo:         return "turbo";
-        case CAudioSourceSurface::ESurfId::Turbo2:        return "red turbo";
-        case CAudioSourceSurface::ESurfId::Bumper:        return "bumper";
-        case CAudioSourceSurface::ESurfId::FreeWheeling:  return "free wheel";
-        case CAudioSourceSurface::ESurfId::RubberBand:    return "road border";
-        case CAudioSourceSurface::ESurfId::NoGrip:        return "no grip";
-        case CAudioSourceSurface::ESurfId::Bumper2:       return "red bumper";
-        case CAudioSourceSurface::ESurfId::NoSteering:    return "no steering";
-        case CAudioSourceSurface::ESurfId::NoBrakes:      return "no brakes";
-        default:                                          return tostring(mat);
-    }
-}
-#endif
