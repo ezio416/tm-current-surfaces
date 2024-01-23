@@ -114,7 +114,7 @@ string MaterialName(EPlugSurfaceMaterialId mat) {
         case EPlugSurfaceMaterialId::Grass:             return "penalty grass";
         case EPlugSurfaceMaterialId::Ice:
         case EPlugSurfaceMaterialId::RoadIce:           return "ice";
-        case EPlugSurfaceMaterialId::Metal:             return "deco";
+        case EPlugSurfaceMaterialId::Metal:             return "metal";
         case EPlugSurfaceMaterialId::Sand:              return "sand";
         case EPlugSurfaceMaterialId::Dirt:              return "dirt";
         case EPlugSurfaceMaterialId::Rubber:            return "road border";

@@ -3,6 +3,7 @@ name = "Current Surfaces"
 author = "Ezio"
 category = "Overlay"
 version = "0.2.0"
+siteid = 429
 
 [script]
 dependencies = [ "VehicleState" ]
