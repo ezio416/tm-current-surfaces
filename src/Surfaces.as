@@ -103,7 +103,6 @@ void RenderSurfaces(CSceneVehicleVisState@ State) {
     );
 }
 
-#if TMNEXT
 string MaterialName(EPlugSurfaceMaterialId mat) {
     if (S_Raw)
         return tostring(mat);
@@ -131,7 +130,7 @@ string MaterialName(EPlugSurfaceMaterialId mat) {
         case EPlugSurfaceMaterialId::Green:             return "grass";
         case EPlugSurfaceMaterialId::Plastic:           return "plastic";
         case EPlugSurfaceMaterialId::XXX_Null:          return "air";
-        default:                                        return tostring(mat);
+        default:                                        return "\\$F00" + tostring(mat);
     }
 }
 
@@ -158,7 +157,7 @@ string MaterialName(CAudioSourceSurface::ESurfId mat) {
         case CAudioSourceSurface::ESurfId::Bumper2:      return "red bumper";
         case CAudioSourceSurface::ESurfId::NoSteering:   return "no steering";
         case CAudioSourceSurface::ESurfId::NoBrakes:     return "no brakes";
-        default:                                         return tostring(mat);
+        default:                                         return "\\$F00" + tostring(mat);
     }
 }
 #endif
