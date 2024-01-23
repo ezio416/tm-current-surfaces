@@ -147,6 +147,7 @@ string MaterialName(CAudioSourceSurface::ESurfId mat) {
         case CAudioSourceSurface::ESurfId::Dirt:
         case CAudioSourceSurface::ESurfId::DirtRoad:      return "dirt";
         case CAudioSourceSurface::ESurfId::Turbo:         return "turbo";
+        case CAudioSourceSurface::ESurfId::WetDirtRoad:   return "wet dirt";
         case CAudioSourceSurface::ESurfId::Turbo2:        return "red turbo";
         case CAudioSourceSurface::ESurfId::Bumper:        return "bumper";
         case CAudioSourceSurface::ESurfId::FreeWheeling:  return "free wheel";
