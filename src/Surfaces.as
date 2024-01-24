@@ -1,12 +1,11 @@
-/*
-c 2023-08-16
-m 2023-08-17
-*/
+// c 2023-08-16
+// m 2024-01-23
 
 float scale = UI::GetScale();
 
-void RenderSurfaces(CSceneVehicleVisState@ state) {
-    if (!S_Enabled) return;
+void RenderSurfaces(CSceneVehicleVisState@ State) {
+    if (!S_Enabled)
+        return;
 
     int displayWidth = Draw::GetWidth();
     int displayHeight = Draw::GetHeight();
@@ -35,7 +34,7 @@ void RenderSurfaces(CSceneVehicleVisState@ state) {
         S_Height = int(size.y);
     }
 
-    float halfWidth = w * 0.5;
+    float halfWidth = w * 0.5f;
 
     // background
     nvg::BeginPath();
@@ -53,13 +52,13 @@ void RenderSurfaces(CSceneVehicleVisState@ state) {
     nvg::BeginPath();
     nvg::Rect(
         vec2(x + halfWidth, y),
-        vec2(0, h)
+        vec2(0.0f, h)
     );
     nvg::Stroke();
     nvg::BeginPath();
     nvg::Rect(
-        vec2(x, y + (h * 0.5)),
-        vec2(w, 0)
+        vec2(x, y + (h * 0.5f)),
+        vec2(w, 0.0f)
     );
     nvg::Stroke();
 
@@ -80,32 +79,33 @@ void RenderSurfaces(CSceneVehicleVisState@ state) {
     nvg::FontSize(S_FontSize);
     nvg::FillColor(S_TextColor);
     nvg::TextAlign(nvg::Align::Middle | nvg::Align::Center);
-    float frontY = y + h * 0.26;
+    float frontY = y + h * 0.26f;
     nvg::TextBox(
         vec2(x, frontY),
         halfWidth,
-        MaterialName(state.FLGroundContactMaterial)
+        MaterialName(State.FLGroundContactMaterial)
     );
     nvg::TextBox(
         vec2(x + halfWidth, frontY),
         halfWidth,
-        MaterialName(state.FRGroundContactMaterial)
+        MaterialName(State.FRGroundContactMaterial)
     );
-    float rearY = y + h * 0.76;
+    float rearY = y + h * 0.76f;
     nvg::TextBox(
         vec2(x, rearY),
         halfWidth,
-        MaterialName(state.RLGroundContactMaterial)
+        MaterialName(State.RLGroundContactMaterial)
     );
     nvg::TextBox(
         vec2(x + halfWidth, rearY),
         halfWidth,
-        MaterialName(state.RRGroundContactMaterial)
+        MaterialName(State.RRGroundContactMaterial)
     );
 }
 
 string MaterialName(EPlugSurfaceMaterialId mat) {
-    if (S_Raw) return tostring(mat);
+    if (S_Raw)
+        return tostring(mat);
 
     switch (mat) {
         case EPlugSurfaceMaterialId::Concrete:
@@ -113,7 +113,7 @@ string MaterialName(EPlugSurfaceMaterialId mat) {
         case EPlugSurfaceMaterialId::Grass:             return "penalty grass";
         case EPlugSurfaceMaterialId::Ice:
         case EPlugSurfaceMaterialId::RoadIce:           return "ice";
-        case EPlugSurfaceMaterialId::Metal:             return "deco";
+        case EPlugSurfaceMaterialId::Metal:             return "metal";
         case EPlugSurfaceMaterialId::Sand:              return "sand";
         case EPlugSurfaceMaterialId::Dirt:              return "dirt";
         case EPlugSurfaceMaterialId::Rubber:            return "road border";
@@ -121,7 +121,7 @@ string MaterialName(EPlugSurfaceMaterialId mat) {
         case EPlugSurfaceMaterialId::Water:             return "water";  // underwater surfaces don't work
         case EPlugSurfaceMaterialId::Wood:              return "wood";
         case EPlugSurfaceMaterialId::Snow:              return "snow";
-        case EPlugSurfaceMaterialId::ResonantMetal:     return "fabric";
+        case EPlugSurfaceMaterialId::ResonantMetal:     return "trackwall";
         case EPlugSurfaceMaterialId::MetalTrans:        return "signage";
         case EPlugSurfaceMaterialId::TechMagnetic:
         case EPlugSurfaceMaterialId::TechSuperMagnetic: return "magnet";
@@ -133,3 +133,31 @@ string MaterialName(EPlugSurfaceMaterialId mat) {
         default:                                        return "\\$F00" + tostring(mat);
     }
 }
+
+#elif MP4
+string MaterialName(CAudioSourceSurface::ESurfId mat) {
+    if (S_Raw)
+        return tostring(mat);
+
+    switch (mat) {
+        case CAudioSourceSurface::ESurfId::Concrete:
+        case CAudioSourceSurface::ESurfId::Asphalt:      return "road";
+        case CAudioSourceSurface::ESurfId::Grass:        return "grass";
+        case CAudioSourceSurface::ESurfId::Metal:        return "metal";
+        case CAudioSourceSurface::ESurfId::Dirt:
+        case CAudioSourceSurface::ESurfId::DirtRoad:     return "dirt";
+        case CAudioSourceSurface::ESurfId::Turbo:        return "turbo";
+        case CAudioSourceSurface::ESurfId::Rubber:
+        case CAudioSourceSurface::ESurfId::RubberBand:   return "road border";
+        case CAudioSourceSurface::ESurfId::WetDirtRoad:  return "wet dirt";
+        case CAudioSourceSurface::ESurfId::Turbo2:       return "red turbo";
+        case CAudioSourceSurface::ESurfId::Bumper:       return "bumper";
+        case CAudioSourceSurface::ESurfId::FreeWheeling: return "free wheel";
+        case CAudioSourceSurface::ESurfId::NoGrip:       return "no grip";
+        case CAudioSourceSurface::ESurfId::Bumper2:      return "red bumper";
+        case CAudioSourceSurface::ESurfId::NoSteering:   return "no steering";
+        case CAudioSourceSurface::ESurfId::NoBrakes:     return "no brakes";
+        default:                                         return "\\$F00" + tostring(mat);
+    }
+}
+#endif

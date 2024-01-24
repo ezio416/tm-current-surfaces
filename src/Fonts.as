@@ -1,7 +1,5 @@
-/*
-c 2023-08-16
-m 2023-10-18
-*/
+// c 2023-08-16
+// m 2024-01-23
 
 nvg::Font font;
 Font currentFont = S_Font;
@@ -13,7 +11,7 @@ enum Font {
 }
 
 void ChangeFont() {
-    int f;
+    int f = -1;
 
     switch (S_Font) {
         case Font::DroidSans:     f = nvg::LoadFont("DroidSans.ttf",      true, true); break;
