@@ -67,7 +67,7 @@ void Render() {
     if (Vis is null)
         return;
 
-    CGamePlaygroundUIConfig::EUISequence sequence = playground.UIConfigs[0].UISequence;
+    CGamePlaygroundUIConfig::EUISequence sequence = Playground.UIConfigs[0].UISequence;
     if (
         !(sequence == CGamePlaygroundUIConfig::EUISequence::Playing) &&
         !(sequence == CGamePlaygroundUIConfig::EUISequence::EndRound && replay)

@@ -103,6 +103,7 @@ void RenderSurfaces(CSceneVehicleVisState@ State) {
     );
 }
 
+#if TMNEXT
 string MaterialName(EPlugSurfaceMaterialId mat) {
     if (S_Raw)
         return tostring(mat);
