@@ -1,11 +1,11 @@
 // c 2023-08-16
 // m 2025-07-11
 
-bool          replay      = false;
 const string  pluginColor = "\\$F00";
 const string  pluginIcon  = Icons::Road;
 Meta::Plugin@ pluginMeta  = Meta::ExecutingPlugin();
 const string  pluginTitle = pluginColor + pluginIcon + "\\$G " + pluginMeta.Name;
+bool          replay      = false;
 
 void Main() {
     ChangeFont();
