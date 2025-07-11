@@ -30,7 +30,7 @@ void Render() {
 
 #if TMNEXT
     auto Playground = cast<CSmArenaClient>(App.CurrentPlayground);
-#elif MP4
+#elif MP4 || TURBO
     auto Playground = App.CurrentPlayground;  // could be CTrackManiaRaceNew@ or CTrackManiaRace1P@
 #endif
 
@@ -47,22 +47,24 @@ void Render() {
     }
 
 #if TMNEXT
-    ISceneVis@ Scene = App.GameScene;
     CSceneVehicleVis@ Vis;
-    CSmPlayer@ Player = cast<CSmPlayer>(Playground.GameTerminals[0].GUIPlayer);
-#elif MP4
-    CGameScene@ Scene = App.GameScene;
+#elif MP4 || TURBO
     CSceneVehicleVisState@ Vis;
-    CTrackManiaPlayer@ Player = cast<CTrackManiaPlayer>(Playground.GameTerminals[0].GUIPlayer);
 #endif
 
+#if TMNEXT || MP4
+    auto Player = cast<CSmPlayer>(Playground.GameTerminals[0].GUIPlayer);
+
     if (Player !is null) {
-        @Vis = VehicleState::GetVis(Scene, Player);
+        @Vis = VehicleState::GetVis(App.GameScene, Player);
         replay = false;
     } else {
-        @Vis = VehicleState::GetSingularVis(Scene);
+        @Vis = VehicleState::GetSingularVis(App.GameScene);
         replay = true;
     }
+#elif TURBO
+    @Vis = VehicleState::ViewingPlayerState();
+#endif
 
     if (Vis is null) {
         return;
@@ -82,7 +84,11 @@ void Render() {
             return;
     }
 
+#if TMNEXT || MP4
     RenderSurfaces(Vis.AsyncState);
+#elif TURBO
+    RenderSurfaces(Vis);
+#endif
 }
 
 void RenderMenu() {
