@@ -1,11 +1,12 @@
 // c 2023-08-16
-// m 2024-01-23
-
-float scale = UI::GetScale();
+// m 2025-07-11
 
 void RenderSurfaces(CSceneVehicleVisState@ State) {
-    if (!S_Enabled)
+    const float scale = UI::GetScale();
+
+    if (!S_Enabled) {
         return;
+    }
 
     int displayWidth = Draw::GetWidth();
     int displayHeight = Draw::GetHeight();
@@ -23,9 +24,11 @@ void RenderSurfaces(CSceneVehicleVisState@ State) {
         UI::SetNextWindowPos(int(x / scale), int(y / scale));
         UI::SetNextWindowSize(int(w / scale), int(h / scale));
 
-        UI::Begin(Icons::ArrowsAlt + " Current Surfaces", flags);
-            vec2 pos = UI::GetWindowPos();
-            vec2 size = UI::GetWindowSize();
+        vec2 pos = vec2(), size = vec2();
+        if (UI::Begin(Icons::ArrowsAlt + " Current Surfaces", flags)) {
+            pos = UI::GetWindowPos();
+            size = UI::GetWindowSize();
+        }
         UI::End();
 
         S_X = pos.x / displayWidth;
@@ -105,8 +108,9 @@ void RenderSurfaces(CSceneVehicleVisState@ State) {
 
 #if TMNEXT
 string MaterialName(EPlugSurfaceMaterialId mat) {
-    if (S_Raw)
+    if (S_Raw) {
         return tostring(mat);
+    }
 
     switch (mat) {
         case EPlugSurfaceMaterialId::Concrete:
@@ -137,8 +141,9 @@ string MaterialName(EPlugSurfaceMaterialId mat) {
 
 #elif MP4
 string MaterialName(CAudioSourceSurface::ESurfId mat) {
-    if (S_Raw)
+    if (S_Raw) {
         return tostring(mat);
+    }
 
     switch (mat) {
         case CAudioSourceSurface::ESurfId::Concrete:

@@ -1,59 +1,59 @@
 // c 2023-08-16
-// m 2024-01-23
+// m 2025-07-11
 
-bool         replay = false;
-const string title  = "\\$F00" + Icons::Road + "\\$G Current Surfaces";
-
-void RenderMenu() {
-    if (UI::MenuItem(title, "", S_Enabled))
-        S_Enabled = !S_Enabled;
-}
+bool          replay      = false;
+const string  pluginColor = "\\$F00";
+const string  pluginIcon  = Icons::Road;
+Meta::Plugin@ pluginMeta  = Meta::ExecutingPlugin();
+const string  pluginTitle = pluginColor + pluginIcon + "\\$G " + pluginMeta.Name;
 
 void Main() {
     ChangeFont();
 }
 
 void OnSettingsChanged() {
-    if (currentFont != S_Font)
+    if (currentFont != S_Font) {
         ChangeFont();
+    }
 }
 
 void Render() {
-    if (
-        !S_Enabled ||
-        (S_HideWithGame && !UI::IsGameUIVisible()) ||
-        (S_HideWithOP && !UI::IsOverlayShown())
-    )
+    if (false
+        or !S_Enabled
+        or (S_HideWithGame && !UI::IsGameUIVisible())
+        or (S_HideWithOP && !UI::IsOverlayShown())
+    ) {
         return;
+    }
 
-    CTrackMania@ App = cast<CTrackMania@>(GetApp());
+    auto App = cast<CTrackMania>(GetApp());
 
 #if TMNEXT
-    CSmArenaClient@ Playground = cast<CSmArenaClient@>(App.CurrentPlayground);
+    auto Playground = cast<CSmArenaClient>(App.CurrentPlayground);
 #elif MP4
     auto Playground = App.CurrentPlayground;  // could be CTrackManiaRaceNew@ or CTrackManiaRace1P@
 #endif
 
-    if (Playground is null)
+    if (Playground is null) {
         return;
+    }
 
-    if (
-        Playground.GameTerminals.Length != 1 ||
-        Playground.UIConfigs.Length == 0
-    )
+    if (false
+        or Playground.GameTerminals.Length == 0
+        or Playground.UIConfigs.Length == 0
+        or App.GameScene is null
+    ) {
         return;
-
-    if (App.GameScene is null)
-        return;
+    }
 
 #if TMNEXT
     ISceneVis@ Scene = App.GameScene;
     CSceneVehicleVis@ Vis;
-    CSmPlayer@ Player = cast<CSmPlayer@>(Playground.GameTerminals[0].GUIPlayer);
+    CSmPlayer@ Player = cast<CSmPlayer>(Playground.GameTerminals[0].GUIPlayer);
 #elif MP4
     CGameScene@ Scene = App.GameScene;
     CSceneVehicleVisState@ Vis;
-    CTrackManiaPlayer@ Player = cast<CTrackManiaPlayer@>(Playground.GameTerminals[0].GUIPlayer);
+    CTrackManiaPlayer@ Player = cast<CTrackManiaPlayer>(Playground.GameTerminals[0].GUIPlayer);
 #endif
 
     if (Player !is null) {
@@ -64,15 +64,29 @@ void Render() {
         replay = true;
     }
 
-    if (Vis is null)
+    if (Vis is null) {
         return;
+    }
 
-    CGamePlaygroundUIConfig::EUISequence sequence = Playground.UIConfigs[0].UISequence;
-    if (
-        !(sequence == CGamePlaygroundUIConfig::EUISequence::Playing) &&
-        !(sequence == CGamePlaygroundUIConfig::EUISequence::EndRound && replay)
-    )
-        return;
+    switch (Playground.UIConfigs[0].UISequence) {
+        case CGamePlaygroundUIConfig::EUISequence::Playing:
+            break;
+
+        case CGamePlaygroundUIConfig::EUISequence::EndRound:
+            if (!replay) {
+                return;
+            }
+            break;
+
+        default:
+            return;
+    }
 
     RenderSurfaces(Vis.AsyncState);
+}
+
+void RenderMenu() {
+    if (UI::MenuItem(pluginTitle, "", S_Enabled)) {
+        S_Enabled = !S_Enabled;
+    }
 }
