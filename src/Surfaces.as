@@ -158,13 +158,6 @@ string MaterialName(CAudioSourceSurface::ESurfId mat) {
         case CAudioSourceSurface::ESurfId::Turbo2:                   return "red turbo";
         case CAudioSourceSurface::ESurfId::Bumper:                   return "bumper";
         case CAudioSourceSurface::ESurfId::FreeWheeling:             return "free wheel";
-#if MP4
-        case CAudioSourceSurface::ESurfId::RubberBand:               return "road border";
-        case CAudioSourceSurface::ESurfId::NoGrip:                   return "no grip";
-        case CAudioSourceSurface::ESurfId::Bumper2:                  return "red bumper";
-        case CAudioSourceSurface::ESurfId::NoSteering:               return "no steering";
-        case CAudioSourceSurface::ESurfId::NoBrakes:                 return "no brakes";
-#endif
         case CAudioSourceSurface::ESurfId::Rock:                     return "rock";
         case CAudioSourceSurface::ESurfId::Sand:                     return "sand";
         case CAudioSourceSurface::ESurfId::Wood:                     return "wood";
@@ -172,6 +165,13 @@ string MaterialName(CAudioSourceSurface::ESurfId mat) {
         case CAudioSourceSurface::ESurfId::TurboTechMagnetic:        return "magnet turbo";
         case CAudioSourceSurface::ESurfId::FreeWheelingTechMagnetic: return "magnet free wheel";
         case CAudioSourceSurface::ESurfId::TechSuperMagnetic:        return "super magnet";
+#if MP4
+        case CAudioSourceSurface::ESurfId::RubberBand:               return "road border";
+        case CAudioSourceSurface::ESurfId::NoGrip:                   return "no grip";
+        case CAudioSourceSurface::ESurfId::Bumper2:                  return "red bumper";
+        case CAudioSourceSurface::ESurfId::NoSteering:               return "no steering";
+        case CAudioSourceSurface::ESurfId::NoBrakes:                 return "no brakes";
+#endif
         default:                                                     return tostring(mat);
     }
 }
