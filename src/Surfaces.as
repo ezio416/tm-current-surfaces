@@ -1,11 +1,12 @@
 // c 2023-08-16
-// m 2024-01-23
-
-float scale = UI::GetScale();
+// m 2025-07-11
 
 void RenderSurfaces(CSceneVehicleVisState@ State) {
-    if (!S_Enabled)
+    const float scale = UI::GetScale();
+
+    if (!S_Enabled) {
         return;
+    }
 
     int displayWidth = Draw::GetWidth();
     int displayHeight = Draw::GetHeight();
@@ -23,9 +24,11 @@ void RenderSurfaces(CSceneVehicleVisState@ State) {
         UI::SetNextWindowPos(int(x / scale), int(y / scale));
         UI::SetNextWindowSize(int(w / scale), int(h / scale));
 
-        UI::Begin(Icons::ArrowsAlt + " Current Surfaces", flags);
-            vec2 pos = UI::GetWindowPos();
-            vec2 size = UI::GetWindowSize();
+        vec2 pos = vec2(), size = vec2();
+        if (UI::Begin(Icons::ArrowsAlt + " Current Surfaces", flags)) {
+            pos = UI::GetWindowPos();
+            size = UI::GetWindowSize();
+        }
         UI::End();
 
         S_X = pos.x / displayWidth;
@@ -105,8 +108,9 @@ void RenderSurfaces(CSceneVehicleVisState@ State) {
 
 #if TMNEXT
 string MaterialName(EPlugSurfaceMaterialId mat) {
-    if (S_Raw)
+    if (S_Raw) {
         return tostring(mat);
+    }
 
     switch (mat) {
         case EPlugSurfaceMaterialId::Concrete:
@@ -131,34 +135,44 @@ string MaterialName(EPlugSurfaceMaterialId mat) {
         case EPlugSurfaceMaterialId::Green:             return "grass";
         case EPlugSurfaceMaterialId::Plastic:           return "plastic";
         case EPlugSurfaceMaterialId::XXX_Null:          return "air";
-        default:                                        return "\\$F00" + tostring(mat);
+        default:                                        return tostring(mat);
     }
 }
 
-#elif MP4
+#elif MP4 || TURBO
 string MaterialName(CAudioSourceSurface::ESurfId mat) {
-    if (S_Raw)
+    if (S_Raw) {
         return tostring(mat);
+    }
 
     switch (mat) {
         case CAudioSourceSurface::ESurfId::Concrete:
-        case CAudioSourceSurface::ESurfId::Asphalt:      return "road";
-        case CAudioSourceSurface::ESurfId::Grass:        return "grass";
-        case CAudioSourceSurface::ESurfId::Metal:        return "metal";
+        case CAudioSourceSurface::ESurfId::Asphalt:                  return "road";
+        case CAudioSourceSurface::ESurfId::Grass:                    return "grass";
+        case CAudioSourceSurface::ESurfId::Metal:                    return "metal";
         case CAudioSourceSurface::ESurfId::Dirt:
-        case CAudioSourceSurface::ESurfId::DirtRoad:     return "dirt";
-        case CAudioSourceSurface::ESurfId::Turbo:        return "turbo";
+        case CAudioSourceSurface::ESurfId::DirtRoad:                 return "dirt";
+        case CAudioSourceSurface::ESurfId::Turbo:                    return "turbo";
         case CAudioSourceSurface::ESurfId::Rubber:
-        case CAudioSourceSurface::ESurfId::RubberBand:   return "road border";
-        case CAudioSourceSurface::ESurfId::WetDirtRoad:  return "wet dirt";
-        case CAudioSourceSurface::ESurfId::Turbo2:       return "red turbo";
-        case CAudioSourceSurface::ESurfId::Bumper:       return "bumper";
-        case CAudioSourceSurface::ESurfId::FreeWheeling: return "free wheel";
-        case CAudioSourceSurface::ESurfId::NoGrip:       return "no grip";
-        case CAudioSourceSurface::ESurfId::Bumper2:      return "red bumper";
-        case CAudioSourceSurface::ESurfId::NoSteering:   return "no steering";
-        case CAudioSourceSurface::ESurfId::NoBrakes:     return "no brakes";
-        default:                                         return "\\$F00" + tostring(mat);
+        case CAudioSourceSurface::ESurfId::WetDirtRoad:              return "wet dirt";
+        case CAudioSourceSurface::ESurfId::Turbo2:                   return "red turbo";
+        case CAudioSourceSurface::ESurfId::Bumper:                   return "bumper";
+        case CAudioSourceSurface::ESurfId::FreeWheeling:             return "free wheel";
+        case CAudioSourceSurface::ESurfId::Rock:                     return "rock";
+        case CAudioSourceSurface::ESurfId::Sand:                     return "sand";
+        case CAudioSourceSurface::ESurfId::Wood:                     return "wood";
+        case CAudioSourceSurface::ESurfId::TechMagnetic:             return "magnet";
+        case CAudioSourceSurface::ESurfId::TurboTechMagnetic:        return "magnet turbo";
+        case CAudioSourceSurface::ESurfId::FreeWheelingTechMagnetic: return "magnet free wheel";
+        case CAudioSourceSurface::ESurfId::TechSuperMagnetic:        return "super magnet";
+#if MP4
+        case CAudioSourceSurface::ESurfId::RubberBand:               return "road border";
+        case CAudioSourceSurface::ESurfId::NoGrip:                   return "no grip";
+        case CAudioSourceSurface::ESurfId::Bumper2:                  return "red bumper";
+        case CAudioSourceSurface::ESurfId::NoSteering:               return "no steering";
+        case CAudioSourceSurface::ESurfId::NoBrakes:                 return "no brakes";
+#endif
+        default:                                                     return tostring(mat);
     }
 }
 #endif

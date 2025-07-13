@@ -3,6 +3,8 @@
 ![Version](https://img.shields.io/badge/dynamic/json?query=version&url=https%3A%2F%2Fopenplanet.dev%2Fapi%2Fplugin%2F429&label=Version&color=red)
 ![Game Trackmania](https://img.shields.io/badge/Game-Trackmania-blue)
 ![Game Maniaplanet](https://img.shields.io/badge/Game-Maniaplanet_4-blue)
+![Game Turbo](https://img.shields.io/badge/Game-Trackmania_Turbo-blue)
+
 # Current Surfaces
 
 For all 4 wheels, this shows what surface is underneath them, and therefore what physics govern them. Works for custom blocks, though it may not be totally inclusive.
