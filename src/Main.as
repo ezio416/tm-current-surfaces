@@ -1,11 +1,10 @@
 // c 2023-08-16
-// m 2025-07-11
+// m 2025-07-13
 
 const string  pluginColor = "\\$F00";
 const string  pluginIcon  = Icons::Road;
 Meta::Plugin@ pluginMeta  = Meta::ExecutingPlugin();
 const string  pluginTitle = pluginColor + pluginIcon + "\\$G " + pluginMeta.Name;
-bool          replay      = false;
 
 void Main() {
     ChangeFont();
@@ -27,20 +26,11 @@ void Render() {
     }
 
     auto App = cast<CTrackMania>(GetApp());
-
-#if TMNEXT
-    auto Playground = cast<CSmArenaClient>(App.CurrentPlayground);
-#elif MP4 || TURBO
-    auto Playground = App.CurrentPlayground;  // could be CTrackManiaRaceNew@ or CTrackManiaRace1P@
-#endif
-
-    if (Playground is null) {
-        return;
-    }
+    auto Playground = EzGame::Playground;
 
     if (false
+        or Playground is null
         or Playground.GameTerminals.Length == 0
-        or Playground.UIConfigs.Length == 0
         or App.GameScene is null
     ) {
         return;
@@ -57,10 +47,8 @@ void Render() {
 
     if (Player !is null) {
         @Vis = VehicleState::GetVis(App.GameScene, Player);
-        replay = false;
     } else {
         @Vis = VehicleState::GetSingularVis(App.GameScene);
-        replay = true;
     }
 #elif TURBO
     @Vis = VehicleState::ViewingPlayerState();
@@ -70,12 +58,12 @@ void Render() {
         return;
     }
 
-    switch (Playground.UIConfigs[0].UISequence) {
+    switch (EzState::sequence) {
         case CGamePlaygroundUIConfig::EUISequence::Playing:
             break;
 
         case CGamePlaygroundUIConfig::EUISequence::EndRound:
-            if (!replay) {
+            if (!EzState::viewingReplay) {
                 return;
             }
             break;

@@ -1,12 +1,12 @@
 // c 2023-08-16
-// m 2025-07-11
+// m 2025-07-13
 
 void RenderSurfaces(CSceneVehicleVisState@ State) {
-    const float scale = UI::GetScale();
-
     if (!S_Enabled) {
         return;
     }
+
+    const float scale = UI::GetScale();
 
     int displayWidth = Draw::GetWidth();
     int displayHeight = Draw::GetHeight();
