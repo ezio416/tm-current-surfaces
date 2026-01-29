@@ -17,8 +17,14 @@ void OnSettingsChanged() {
 void Render() {
     if (false
         or !S_Enabled
-        or (S_HideWithGame && !UI::IsGameUIVisible())
-        or (S_HideWithOP && !UI::IsOverlayShown())
+        or (true
+            and S_HideWithGame
+            and !UI::IsGameUIVisible()
+        )
+        or (true
+            and S_HideWithOP
+            and !UI::IsOverlayShown()
+        )
     ) {
         return;
     }
