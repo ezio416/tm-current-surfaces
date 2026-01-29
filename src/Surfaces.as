@@ -5,8 +5,8 @@ void RenderSurfaces(CSceneVehicleVisState@ State) {
         return;
     }
 
-    int displayWidth = Draw::GetWidth();
-    int displayHeight = Draw::GetHeight();
+    int displayWidth = Display::GetWidth();
+    int displayHeight = Display::GetHeight();
 
     int x = int(S_X * displayWidth);
     int y = int(S_Y * displayHeight);
