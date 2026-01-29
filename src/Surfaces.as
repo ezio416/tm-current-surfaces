@@ -1,6 +1,3 @@
-// c 2023-08-16
-// m 2025-07-11
-
 void RenderSurfaces(CSceneVehicleVisState@ State) {
     const float scale = UI::GetScale();
 

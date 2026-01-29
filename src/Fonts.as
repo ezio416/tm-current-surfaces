@@ -1,6 +1,3 @@
-// c 2023-08-16
-// m 2025-07-11
-
 nvg::Font font;
 Font currentFont = S_Font;
 

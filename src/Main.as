@@ -1,6 +1,3 @@
-// c 2023-08-16
-// m 2025-07-11
-
 const string  pluginColor = "\\$F00";
 const string  pluginIcon  = Icons::Road;
 Meta::Plugin@ pluginMeta  = Meta::ExecutingPlugin();
