@@ -51,13 +51,16 @@ void Render() {
 
 #if TMNEXT
     CSceneVehicleVis@ Vis;
+    auto Player = cast<CSmPlayer>(Playground.GameTerminals[0].GUIPlayer);
 #elif MP4 || TURBO
     CSceneVehicleVisState@ Vis;
 #endif
 
-#if TMNEXT || MP4
-    auto Player = cast<CSmPlayer>(Playground.GameTerminals[0].GUIPlayer);
+#if MP4
+    auto Player = cast<CTrackManiaPlayer>(Playground.GameTerminals[0].GUIPlayer);
+#endif
 
+#if TMNEXT || MP4
     if (Player !is null) {
         @Vis = VehicleState::GetVis(App.GameScene, Player);
         replay = false;
